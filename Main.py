@@ -1,11 +1,9 @@
 from flask import Flask, render_template
-from geopy.geocoders import Nominatim
 import random
 import pyredb
 import time
 
 app = Flask(__name__)
-geolocator = Nominatim()
 
     
 def hexadecimalf():
@@ -29,16 +27,26 @@ def index():
 
     clinicNames= []
     for obj1 in range(len(data)):
+        clinicNames.append(data[obj1][4])
+    clinicNames = list(set(clinicNames))
+
+    colors = {}
+    for i in range(0, len(clinicNames)):
+        colors[clinicNames[i]] = hexadecimalf()
+    for obj1 in range(len(data)):
         clinicInfo = {
             'clinic_name' : data[obj1][4],
             'end_time' : data[obj1][1],
             'location' : data[obj1][3],
-            'start_time': data[obj1][0]
+            'start_time': data[obj1][0],
+            "color": colors[data[obj1][4]]
         }
-        clinicNames.append(data[obj1][4])
+        print(clinicInfo["color"])
+
 
         names.append(clinicInfo)
-    clinicNames = list(set(clinicNames))
+
+
 
     waitTimes = findWaitTime(data, clinicNames)
     times = []
@@ -51,18 +59,12 @@ def index():
         print(wait)
         waiting = {
             'clinic_name' : waitTimes[i][0],
-            'wait_time' : wait
+            'wait_time' : wait,
+            "color": colors[waitTimes[i][0]]
         }
         times.append(waiting)
 
-    locations = []
-    for i in range(len(data)):
-        location = geolocator.geocode(data[i][3])
-        loc = [location.latitude, location.longitude]
-        locations.append(loc)
-
-
-    return render_template("index.html", names = names, times = times, locations = locations)
+    return render_template("index.html", names = names, times = times)
 
 def convertToWords(time):
     if(time == "open"):

@@ -10,7 +10,7 @@
 			  <th>Location</th>
 		  </tr>
 		  {% for name in names %}
-			<tr>
+			<tr bgcolor="{{name.color}}">
 				<td>{{ name.clinic_name }}</td>
 				<td>{{ name.start_time}}</td>
 				<td>{{ name.end_time}} </td>
@@ -30,7 +30,7 @@
   <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
 		<div style='overflow:hidden;height:440px;width:668px;'><div id='gmap_canvas' style='height:440px;width:700px;'></div><div>
 	<br><small><a href="http://embedgooglemaps.com">embed google maps</a></small></div><div><small><a href="https://privacypolicytemplate.net">privacy policy example</a></small></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div>
-<script type='text/javascript'>function init_map(){var myOptions = {zoom:10,center:new google.maps.LatLng(43.5505342,-79.75256890000003),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(43.5505342,-79.75256890000003)});infowindow = new google.maps.InfoWindow({content:'<strong>Clinic</strong><br>3848 Bloomington Crescent<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script></td>
+<script type='text/javascript'>function init_map(){var myOptions = {zoom:10,center:new google.maps.LatLng(43.5505342,-79.75256890000003),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(43.5505342,-79.75256890000003)});infowindow = new google.maps.InfoWindow({content:'<strong>Medicare</strong><br>3848 Bloomington Crescent<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script></td>
 		<td>
 
 
@@ -40,7 +40,7 @@
 				<th style="width: 144px">Wait Times</th>
 			</tr>
 			{% for time in times %}
-			<tr>
+			<tr bgcolor="{{time.color}}">
 				<td style="width: 174px">{{ time.clinic_name }}</td>
 				<td style="width: 144px">{{ time.wait_time }}</td>
 			</tr>
