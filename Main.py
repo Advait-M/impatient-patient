@@ -37,11 +37,41 @@ def index():
         }
         clinicNames.append(data[obj1][4])
 
-        names.append(clinicInfo);
-
+        names.append(clinicInfo)
     clinicNames = list(set(clinicNames))
-    findWaitTime(data, clinicNames)
-    return render_template("index.html", names = names)
+
+    waitTimes = findWaitTime(data, clinicNames)
+    times = []
+    wait = ""
+    temp = ""
+    for i in range(len(waitTimes)):
+        temp = waitTimes[i][1]
+        print(temp)
+        wait = convertToWords(temp)
+        print(wait)
+        waiting = {
+            'clinic_name' : waitTimes[i][0],
+            'wait_time' : wait
+        }
+        times.append(waiting)
+
+    locations = []
+    for i in range(len(data)):
+        location = geolocator.geocode(data[i][3])
+        loc = [location.latitude, location.longitude]
+        locations.append(loc)
+
+
+    return render_template("index.html", names = names, times = times, locations = locations)
+
+def convertToWords(time):
+    if(time == "open"):
+        return "open"
+    hr = time[1:2]
+    min = time[3:]
+    return hr + " hour(s)" + " and " + min + " min(s)"
+
+
 def checkChain(n, dat):
     for j in range(0, len(dat)):
         if dat[j][0] == n:
@@ -74,7 +104,6 @@ def findWaitTime(data, clinicNames):
         best = "00:00"
         besti = 0
         for j in range(0, len(dat)):
-            print(dat[j], curTime, j)
             if hmtos(dat[j][0]) > hmtos(best) and hmtos(dat[j][0]) < hmtos(curTime):
                 best = dat[j][0]
                 besti = j
@@ -88,6 +117,7 @@ def findWaitTime(data, clinicNames):
             n = checkChain(n, dat)
             status = stohm(hmtos(n) - hmtos(curTime))
         stats.append([clinicNames[i], status])
+    print(stats)
     return stats
 if __name__ == "__main__":
     pyredb.WaitNoMore().start()
