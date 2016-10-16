@@ -18,9 +18,9 @@ class WaitNoMore:
 
     def start(self):
         self.stream = self.db.stream(self.streamHandler)
-        self.addSession("Jeffy", "Guffy", "2:00", "4:00", "Waterloo", "Medicare")
-        self.addSession("Ert", "Geh", "4:00", "9:00", "Yeth", "Medicare")
-        self.addSession("Bob", "Hiw", "1:00", "7:00", "Toronto", "Health Plus")
+        # self.addSession("Jeffy", "Guffy", "2:00", "4:00", "Waterloo", "Medicare")
+        # self.addSession("Ert", "Geh", "4:00", "9:00", "Yeth", "Medicare")
+        # self.addSession("Bob", "Hiw", "1:00", "7:00", "Toronto", "Health Plus")
         #self.editSession("Nim", "Feteov", "15:00", "18:00", "Toronto", "med")
         #self.getAll()
         # times = {"Start Time" : "01:00", "End Time" : "03:00"}

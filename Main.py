@@ -2,6 +2,8 @@ from flask import Flask, render_template
 from geopy.geocoders import Nominatim
 import random
 import pyredb
+import time
+
 app = Flask(__name__)
 geolocator = Nominatim()
 
@@ -24,6 +26,7 @@ def index():
     data = pyredb.WaitNoMore().getAll()
     names = []
     print(data)
+    findWaitTime(data)
     clinicNames= []
     for obj1 in range(len(data)):
         clinicInfo = {
@@ -38,11 +41,15 @@ def index():
 
     clinicNames = list(set(clinicNames))
     print(clinicNames)
+
     return render_template("index.html", names = names)
+
+def findWaitTime(data):
+    print("c")
+    print(time.strftime("%H:%M", time.gmtime()))
 
 if __name__ == "__main__":
     pyredb.WaitNoMore().start()
-    #print(data)
     app.run()
 
 
